@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
         btnLoading.style.display = 'inline-block';
 
         // Enviar via EmailJS
-        emailjs.send('SEU_SERVICE_ID', 'SEU_TEMPLATE_ID', formData)
+        emailjs.send('service_5phr6ch', 'mba1v24', formData)
             .then(function(response) {
                 console.log('SUCCESS!', response.status, response.text);
                 showAlert('Inscrição enviada com sucesso! Entraremos em contato em breve.');
