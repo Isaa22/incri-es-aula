@@ -4,30 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulário de Inscrição</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
     <div class="container">
         <h1>Formulário de Inscrição</h1>
+        
+        <div id="alertBox" class="alert" style="display: none;"></div>
+        
         <form id="inscricaoForm">
             <div class="form-group">
                 <label for="nome">Nome Completo:</label>
-                <input type="text" id="nome" name="nome" required>
+                <input type="text" id="nome" name="nome" required placeholder="Digite seu nome completo">
             </div>
             
             <div class="form-group">
                 <label for="email">E-mail:</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" required placeholder="seu@email.com">
             </div>
             
             <div class="form-group">
-                <label for="telefone">Telefone:</label>
-                <input type="tel" id="telefone" name="telefone">
+                <label for="telefone">Telefone/WhatsApp:</label>
+                <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000">
             </div>
             
             <div class="form-group">
                 <label for="interesse">Área de Interesse:</label>
-                <select id="interesse" name="interesse">
+                <select id="interesse" name="interesse" required>
+                    <option value="" disabled selected>Selecione uma opção</option>
                     <option value="tecnologia">Tecnologia</option>
                     <option value="design">Design</option>
                     <option value="marketing">Marketing</option>
@@ -35,20 +42,42 @@
                 </select>
             </div>
             
-            <button type="submit" class="submit-btn">Enviar Inscrição</button>
+            <div class="form-group">
+                <div class="g-recaptcha" data-sitekey="SUA_CHAVE_RECAPTCHA"></div>
+            </div>
+            
+            <button type="submit" class="submit-btn" id="submitBtn">
+                <span id="btnText">Enviar Inscrição</span>
+                <span id="btnLoading" class="loading" style="display: none;"></span>
+            </button>
         </form>
     </div>
 
     <footer class="footer">
         <div class="social-links">
-            <a href="https://open.spotify.com/user/SEU_PERFIL" target="_blank">Spotify</a>
-            <a href="https://wa.me/SEU_NUMERO" target="_blank">WhatsApp</a>
-            <a href="https://www.instagram.com/SEU_PERFIL" target="_blank">Instagram</a>
-            <a href="https://www.youtube.com/SEU_CANAL" target="_blank">YouTube</a>
+            <a href="https://open.spotify.com/user/SEU_PERFIL" target="_blank">
+                <i class="fab fa-spotify"></i> Spotify
+            </a>
+            <a href="https://wa.me/SEU_NUMERO" target="_blank">
+                <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
+            <a href="https://www.instagram.com/SEU_PERFIL" target="_blank">
+                <i class="fab fa-instagram"></i> Instagram
+            </a>
+            <a href="https://www.youtube.com/SEU_CANAL" target="_blank">
+                <i class="fab fa-youtube"></i> YouTube
+            </a>
         </div>
-        <p>© 2023 Todos os direitos reservados</p>
+        <p>© <span id="currentYear"></span> Todos os direitos reservados</p>
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        // Inicializa o EmailJS com seu User ID
+        emailjs.init('SEU_USER_ID_DO_EMAILJS');
+        
+        // Atualiza o ano no footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>
