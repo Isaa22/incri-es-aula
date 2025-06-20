@@ -35,7 +35,12 @@
                 </select>
             </div>
             
-            <button type="submit" class="submit-btn">Enviar Inscrição</button>
+        <form action="https://formsubmit.co/SEU_EMAIL@exemplo.com" method="POST">
+    <!-- Campos do formulário -->
+    <input type="hidden" name="_subject" value="Nova Inscrição!">
+    <input type="hidden" name="_next" value="https://seusite.com/obrigado.html">
+    <button type="submit">Enviar Inscrição</button>
+</form>
         </form>
     </div>
 
