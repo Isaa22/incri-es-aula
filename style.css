@@ -6,6 +6,7 @@
   --dark: #212529;
   --gray: #6c757d;
   --success: #4cc9f0;
+  --error: #f72585;
   --font-main: 'Poppins', sans-serif;
   --font-secondary: 'Open Sans', sans-serif;
   --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
@@ -71,6 +72,34 @@ h1::after {
   border-radius: 2px;
 }
 
+/* Alertas */
+.alert {
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  display: none;
+  animation: fadeIn 0.3s ease-out;
+  font-family: var(--font-main);
+}
+
+.alert.success {
+  background-color: rgba(76, 201, 240, 0.1);
+  color: var(--primary-dark);
+  border-left: 4px solid var(--success);
+}
+
+.alert.error {
+  background-color: rgba(247, 37, 133, 0.1);
+  color: var(--secondary);
+  border-left: 4px solid var(--error);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .form-group {
   margin-bottom: 1.75rem;
   position: relative;
@@ -109,6 +138,14 @@ select:focus {
   box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
 }
 
+input:invalid, select:invalid {
+  border-color: var(--error);
+}
+
+input:focus:invalid, select:focus:invalid {
+  box-shadow: 0 0 0 3px rgba(247, 37, 133, 0.25);
+}
+
 select {
   appearance: none;
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
@@ -131,6 +168,8 @@ select {
   transition: var(--transition);
   margin-top: 0.5rem;
   box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
 }
 
 .submit-btn:hover {
@@ -140,6 +179,37 @@ select {
 
 .submit-btn:active {
   transform: translateY(0);
+}
+
+.submit-btn:disabled {
+  background: var(--gray);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* reCAPTCHA */
+.g-recaptcha {
+  margin: 1.5rem 0;
+  display: flex;
+  justify-content: center;
+}
+
+/* Loading */
+.loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 .footer {
@@ -164,7 +234,7 @@ select {
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 500;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1.25rem;
   border-radius: 50px;
   transition: var(--transition);
   display: flex;
@@ -174,6 +244,7 @@ select {
 
 .social-links a:hover {
   transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .social-links a:nth-child(1) { background-color: #1DB954; } /* Spotify */
@@ -190,10 +261,21 @@ select {
   opacity: 0.8;
 }
 
-/* Efeitos para campos preenchidos */
-input:not(:placeholder-shown) {
-  background-color: white !important;
+/* Ícones nos inputs */
+.form-group::after {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  position: absolute;
+  right: 1rem;
+  top: 38px;
+  opacity: 0.5;
+  color: var(--gray);
 }
+
+.form-group:nth-child(1)::after { content: '\f007'; } /* user icon */
+.form-group:nth-child(2)::after { content: '\f0e0'; } /* envelope icon */
+.form-group:nth-child(3)::after { content: '\f095'; } /* phone icon */
+.form-group:nth-child(4)::after { content: '\f05a'; } /* info icon */
 
 /* Responsividade */
 @media (max-width: 768px) {
@@ -208,35 +290,35 @@ input:not(:placeholder-shown) {
   h1 {
     font-size: 1.75rem;
   }
+  
+  .social-links {
+    gap: 1rem;
+  }
+  
+  .social-links a {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
 }
 
-/* Adicionando ícones aos inputs */
-.form-group::after {
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  position: absolute;
-  right: 1rem;
-  top: 38px;
-  opacity: 0.5;
-}
-
-.form-group:nth-child(1)::after { content: '\f007'; } /* user icon */
-.form-group:nth-child(2)::after { content: '\f0e0'; } /* envelope icon */
-.form-group:nth-child(3)::after { content: '\f095'; } /* phone icon */
-.form-group:nth-child(4)::after { content: '\f05a'; } /* info icon */
-
-/* Animação de loading (para quando enviar o formulário) */
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-.loading {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  border-top-color: white;
-  animation: spin 1s ease-in-out infinite;
-  margin-left: 10px;
+@media (max-width: 480px) {
+  .container {
+    padding: 1.25rem;
+  }
+  
+  h1 {
+    font-size: 1.5rem;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  select {
+    padding: 0.75rem;
+  }
+  
+  .submit-btn {
+    padding: 0.75rem;
+    font-size: 1rem;
+  }
 }
